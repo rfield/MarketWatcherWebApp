@@ -3,8 +3,12 @@
 <p>Press the START button to begin streaming prices.</p>
 
 <script>
+  import { currentUser } from '../stores.js';
+
   let { data } = $props();
 </script>
+
+<p>Welcome back, {$currentUser?.givenName || 'Guest'}!</p>
 
 <table>
   <thead>
