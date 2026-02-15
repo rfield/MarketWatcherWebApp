@@ -1,4 +1,4 @@
-<h1>Notifications</h1>
+<h1 class="banner-title">Notifications</h1>
 
 <script>
   let { data } = $props();

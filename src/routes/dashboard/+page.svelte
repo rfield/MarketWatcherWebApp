@@ -1,4 +1,4 @@
-<h1>Dashboard</h1>
+<h1 class="banner-title">Dashboard</h1>
 
 <p>Press the START button to begin streaming prices.</p>
 

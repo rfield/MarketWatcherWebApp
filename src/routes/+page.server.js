@@ -15,14 +15,43 @@ export const actions = {
         }
 
         console.log('Validating credentials for:', { username, password });
-        // Example: Validate credentials (replace with your DB call)
-        if (username !== 'rjfield777' || password !== 'foo') {
-            console.log('Invalid credentials for:', { username });
-            return fail(400, { error: 'Invalid credentials' });
+
+        // Post the data to your external API
+        const authResponse = await fetch('http://localhost:8081/v1/authenticate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Use environment variables for private API keys
+            // 'Authorization': `Bearer ${process.env.EXTERNAL_API_KEY}` 
+            },
+            body: JSON.stringify({ username, password }),
+        });
+
+        if (!authResponse.ok) {
+            console.log('Authentication failed for:', { username, status: authResponse.status });
+            return fail(400, { error: 'Login failed. Please check your credentials.' });
         }
 
+        console.log('Authentication successful for:', { username });
+
+        const authData = await authResponse.json();
+        const userResponse = await fetch(`http://localhost:8081/v1/users/${authData.userId}`, {
+            method: 'GET',
+            // headers: {
+            //     'Authorization': `Bearer ${result.token}`,
+            // },
+        });
+
+        if (!userResponse.ok) {
+            console.log('Failed to retrieve user information for:', { username, status: userResponse.status });
+            return fail(400, { error: 'Failed to retrieve user information.' });
+        }
+
+        const userData = await userResponse.json();
+        console.log('User data retrieved:', userData);
+
         console.log('Login successful for:', { username });
-        // If successful, set cookie or session and redirect
-        return { success: true, user: { username: username, givenName: 'Richard' } };
+        // return { success: true, user: { username: userData.user.username, givenName: userData.user.givenName} };
+        return { success: true, user: userData.user };
     }
 };

@@ -1,0 +1,11 @@
+.banner-title {
+    background-color: #6f5499; /* A professional shade of purple */
+    color: #ffffff;            /* White text for good contrast */
+    padding: 10px 10px;        /* Ample spacing above and below the text */
+    text-align: left;        /* Center the text within the banner */
+    margin: 0;                 /* Remove default margins to ensure full width */
+    width: 60%;               /* Ensure the banner spans the full width of its container */
+    box-sizing: border-box;    /* Ensures padding is included in the element's total width/height */
+    font-family: sans-serif;   /* A clean, readable font */
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1); /* Subtle text shadow for depth */
+}
