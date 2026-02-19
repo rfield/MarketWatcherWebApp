@@ -1,9 +1,10 @@
 <h1 class="banner-title">Dashboard</h1>
 
-<p>Press the START button to begin streaming prices.</p>
+<p>Click REFRESH to update prices.</p>
 
 <script>
   import { currentUser } from '../stores.js';
+  import { currentAssets } from '../stores.js';
 
   let { data } = $props();
 </script>
@@ -13,18 +14,18 @@
 <table>
   <thead>
     <tr>
-	  <th>Account</th>
+	  <th>Portfolio</th>
       <th>Ticker</th>
       <th>Price</th>
-      <th>Holding Amount</th>
-      <th>Total Value</th>
+      <th>Units</th>
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
     <!-- Loop through the data -->
-    {#each data.assetList as asset}
+    {#each $currentAssets as asset}
       <tr>
-        <td>{asset.account}</td>
+        <td>{asset.accountName}</td>
         <td>{asset.ticker}</td>
         <td>{asset.price}</td>
         <td>{asset.holdingAmount}</td>
@@ -34,7 +35,8 @@
   </tbody>
 </table>
 
-<button onclick={() => alert('Streaming started!')}>START</button>
+<p></p>
+<button onclick={() => alert('Refreshed!')}>REFRESH</button>
 
 <style>
   table { width: 50%; border-collapse: collapse; }

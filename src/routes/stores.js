@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const currentUser = writable({});
+export const currentAssets = writable([]);
 
 /**
  * @param {{}} user
@@ -8,3 +9,10 @@ export const currentUser = writable({});
 export function setCurrentUser(user) {
     currentUser.set(user);
 } 
+
+/**
+ * @param {*} assets 
+ */
+export function setCurrentAssets(assets) {
+    currentAssets.set(assets);
+}   
