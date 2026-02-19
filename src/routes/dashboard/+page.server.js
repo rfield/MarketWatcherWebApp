@@ -1,13 +1,15 @@
-import { assets } from './data.js';
+// import { assets } from './data.js';
+// import { currentAssets } from '../stores.js';
 
 export function load() {
-	return {
-		assetList: assets.map((asset) => ({
-            account: asset.account,
-			ticker: asset.ticker,
-			price: asset.price,
-			holdingAmount: asset.holdingAmount,
-			total: asset.price * asset.holdingAmount
-		}))
-	};
+	// return {
+	// 	assetList: assets.map((asset) => ({
+    //         account: asset.account,
+	// 		ticker: asset.ticker,
+	// 		price: asset.price,
+	// 		holdingAmount: asset.holdingAmount,
+	// 		total: asset.price * asset.holdingAmount
+	// 	}))
+	// };
+	// return currentAssets;
 }
