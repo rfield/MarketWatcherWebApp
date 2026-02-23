@@ -3,11 +3,15 @@
 <p>Click REFRESH to update prices.</p>
 
 <script>
-  import { currentUser } from '../stores.js';
-  import { currentAssets } from '../stores.js';
-  import { _toDollars } from '../utils.js';
+  import { currentUser, setCurrentUser, currentAssets, setCurrentAssets } from '../stores.js';
+  import { _toDollars, refreshPrices } from '../utils.js';
+  import { enhance } from '$app/forms';
 
-  let { data } = $props();
+    export let form;
+
+    $: if (form?.success && form?.assets) {
+        setCurrentAssets(form.assets);
+    }
 </script>
 
 <p>Welcome back, {$currentUser?.givenName || 'Guest'}!</p>
@@ -46,7 +50,10 @@
 </table>
 
 <p></p>
-<button onclick={() => alert('Refreshed!')}>REFRESH</button>
+<form method="POST" use:enhance>
+  <input type="hidden" name="assets" value={JSON.stringify($currentAssets)} />
+  <button type="submit">REFRESH</button>
+</form>
 
 <style>
   table { width: 50%; border-collapse: collapse; }

@@ -1,5 +1,6 @@
 // src/routes/login/+page.server.ts
 import { fail } from '@sveltejs/kit';
+import { refreshPrices } from './utils';
 
 export const actions = {
     default: async ({ request }) => {
@@ -74,31 +75,32 @@ export const actions = {
         }
 
         // Get prices and total value for all assets
-        let names = ''
-        for (const asset of allAssets) {
-            names += asset.ticker + ','
-        }
-        names = names.slice(0, -1); // Remove trailing comma
-        const pricesResponse = await fetch(`http://localhost:8081/v1/prices:batchGet?names=${names}`, {
-            method: 'GET',
-        });
-        if (!pricesResponse.ok) {
-            console.log('Failed to retrieve prices for:', { username, assetSymbols: names, status: pricesResponse.status });
-            return fail(400, { error: 'Failed to retrieve prices for assets.' });
-        }
-        const pricesData = await pricesResponse.json();
-        const priceMap = {};
-        for (const price of pricesData.prices) {
-            priceMap[price.priceId] = price.price; // Create a map of ticker to price for easy lookup
-        }
+        // let names = ''
+        // for (const asset of allAssets) {
+        //     names += asset.ticker + ','
+        // }
+        // names = names.slice(0, -1); // Remove trailing comma
+        // const pricesResponse = await fetch(`http://localhost:8081/v1/prices:batchGet?names=${names}`, {
+        //     method: 'GET',
+        // });
+        // if (!pricesResponse.ok) {
+        //     console.log('Failed to retrieve prices for:', { username, assetSymbols: names, status: pricesResponse.status });
+        //     return fail(400, { error: 'Failed to retrieve prices for assets.' });
+        // }
+        // const pricesData = await pricesResponse.json();
+        // const priceMap = {};
+        // for (const price of pricesData.prices) {
+        //     priceMap[price.priceId] = price.price; // Create a map of ticker to price for easy lookup
+        // }
 
-        for (const asset of allAssets) {
-            asset.price = priceMap[asset.ticker]; // Add price to each asset
-            asset.total = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                }).format(asset.holdingAmount * asset.price); // Format total value as currency
-        }
+        // for (const asset of allAssets) {
+        //     asset.price = priceMap[asset.ticker]; // Add price to each asset
+        //     asset.total = new Intl.NumberFormat('en-US', {
+        //         style: 'currency',
+        //         currency: 'USD',
+        //         }).format(asset.holdingAmount * asset.price); // Format total value as currency
+        // }
+        const updatedAssetList = await refreshPrices(allAssets);
 
         // for (const asset of allAssets) {
         //     const priceResponse = await fetch(`http://localhost:8081/v1/prices/${asset.ticker}`, {
@@ -116,7 +118,7 @@ export const actions = {
         //         }).format(asset.holdingAmount * asset.price); // Format total value as currency
         // }
              
-        console.log('All assets retrieved:', allAssets);
-        return { success: true, user: { ...userData.user, assets: allAssets } };
+        console.log('All assets retrieved:', updatedAssetList);
+        return { success: true, user: { ...userData.user, assets: updatedAssetList } };
     }
 };

@@ -24,4 +24,7 @@ npm run dev -- --open
 
 ## Screenshots
 
-Coming soon...
+
+![Login Screen](Screenshot1.png)
+
+![Portfolio Dashboard Screen](Screenshot2.png)
