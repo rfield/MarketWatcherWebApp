@@ -1,5 +1,4 @@
 // import { assets } from './data.js';
-import { currentAssets } from '../stores.js';
 import { refreshPrices } from '../utils.js';
 
 export const actions = {
