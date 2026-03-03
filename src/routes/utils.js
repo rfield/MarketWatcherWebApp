@@ -6,10 +6,11 @@ import { fail } from '@sveltejs/kit';
 export async function refreshPrices(assetList) {
     let names = ''
     for (const asset of assetList) {
-        names += asset.ticker + ','
+        names += 'names=prices/' + asset.ticker + '&';
     }
-    names = names.slice(0, -1); // Remove trailing comma
-    const pricesResponse = await fetch(`http://localhost:8081/v1/prices:batchGet?names=${names}`, {
+    names = names.slice(0, -1); // Remove trailing ampersand
+
+    const pricesResponse = await fetch(`http://localhost:8081/v1/prices:batchGet?${names}`, {
         method: 'GET',
     });
     if (!pricesResponse.ok) {
@@ -19,11 +20,11 @@ export async function refreshPrices(assetList) {
     const pricesData = await pricesResponse.json();
     const priceMap = {};
     for (const price of pricesData.prices) {
-        priceMap[price.priceId] = price.price; // Create a map of ticker to price for easy lookup
+        priceMap[price.name] = price.price; // Create a map of ticker to price for easy lookup
     }
 
     for (const asset of assetList) {
-        asset.price = priceMap[asset.ticker]; // Add price to each asset
+        asset.price = priceMap['prices/' + asset.ticker]; // Add price to each asset
         asset.total = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
