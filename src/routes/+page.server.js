@@ -69,9 +69,9 @@ export const actions = {
             }   
             const assetsData = await assetsResponse.json();
 
-            for (const asset of assetsData.assets) {
-                asset.accountName = account.accountName; // Add account name to each asset for easier access
-            }
+            // Add account name to the first asset only in each account for a nice display
+            assetsData.assets[0].accountName = account.accountName; 
+
             allAssets.push(...assetsData.assets);
         }
 

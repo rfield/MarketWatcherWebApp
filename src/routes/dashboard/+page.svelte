@@ -23,7 +23,7 @@
       <th>Ticker</th>
       <th>Price</th>
       <th>Units</th>
-      <th>Total</th>
+      <th style="text-align: right;">Total</th>
     </tr>
   </thead>
   <tbody>
@@ -32,7 +32,7 @@
       <tr>
         <td style="background-color: #b3ecf5; font-style: italic;">{asset.accountName}</td>
         <td>{asset.ticker}</td>
-        <td>{asset.price}</td>
+        <td style="color: {asset.priceChange > 0 ? 'green' : asset.priceChange < 0 ? 'red' : 'black'};">{asset.price}</td>
         <td>{asset.holdingAmount}</td>
         <td style="text-align: right;">{asset.total}</td>
       </tr>

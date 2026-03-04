@@ -20,15 +20,18 @@ export async function refreshPrices(assetList) {
     const pricesData = await pricesResponse.json();
     const priceMap = {};
     for (const price of pricesData.prices) {
-        priceMap[price.name] = price.price; // Create a map of ticker to price for easy lookup
+        console.log('Received price data:', price);
+        priceMap[price.name] = {'price': price.price, 'change': price.priceChange}; // Create a map of ticker to price for easy lookup
     }
 
     for (const asset of assetList) {
-        asset.price = priceMap['prices/' + asset.ticker]; // Add price to each asset
+        asset.priceChange = priceMap['prices/' + asset.ticker].change;
+        asset.price = priceMap['prices/' + asset.ticker].price; // Add price to each asset
         asset.total = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD',
             }).format(asset.holdingAmount * asset.price); // Format total value as currency
+        console.log(`Updated asset: ${asset.ticker}, Price: ${asset.price}, Price Change: ${asset.priceChange}, Total: ${asset.total}`);
     }
 
     return assetList;
