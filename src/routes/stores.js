@@ -22,6 +22,5 @@ export function setCurrentAssets(assets) {
  * @param {*} notifications
  */
 export function setCurrentNotifications(notifications) {
-    console.log('Setting current notifications:', notifications);
     currentNotifications.set(notifications);
 }

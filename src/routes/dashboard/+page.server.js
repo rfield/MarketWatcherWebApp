@@ -1,4 +1,3 @@
-// import { assets } from './data.js';
 import { refreshPrices } from '../utils.js';
 
 export const actions = {
