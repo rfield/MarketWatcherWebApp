@@ -76,9 +76,19 @@ export const actions = {
         }
 
         const updatedAssetList = await refreshPrices(allAssets);
-
-             
         console.log('All assets retrieved:', updatedAssetList);
-        return { success: true, user: { ...userData.user, assets: updatedAssetList } };
+
+        // Retrieve notifications
+        const notificationsResponse = await fetch(`http://localhost:8081/v1/${authData.name}/notifications`, {
+            method: 'GET',
+        });
+        if (!notificationsResponse.ok) {
+            console.log('Failed to retrieve notifications for:', { username, status: notificationsResponse.status });
+            return fail(400, { error: 'Failed to retrieve user notifications.' });
+        }
+        const notificationsData = await notificationsResponse.json();
+        console.log('Notifications data retrieved:', notificationsData);
+
+        return { success: true, user: { ...userData.user, assets: updatedAssetList, notifications: notificationsData.notifications } };
     }
 };

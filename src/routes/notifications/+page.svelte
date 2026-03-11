@@ -1,21 +1,25 @@
 <h1 class="banner-title">Notifications</h1>
 
 <script>
+  import { currentNotifications } from '../stores.js';  
   let { data } = $props();
+
 </script>
 
 <table>
   <thead>
     <tr>
-      <th>ID</th>
+      <th>Date/Time</th>
+      <th>Title</th>
       <th>Message</th>
     </tr>
   </thead>
   <tbody>
     <!-- Loop through the data -->
-    {#each data.notifications as notification}
+    {#each $currentNotifications as notification}
       <tr>
-        <td>{notification.id}</td>
+        <td>{notification.createdAt}</td>
+        <td>{notification.title}</td>
         <td>{notification.message}</td>
       </tr>
     {/each}

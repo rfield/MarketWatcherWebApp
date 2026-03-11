@@ -3,8 +3,8 @@
 <p>Click REFRESH to update prices.</p>
 
 <script>
-  import { currentUser, setCurrentUser, currentAssets, setCurrentAssets } from '../stores.js';
-  import { _toDollars, refreshPrices } from '../utils.js';
+  import { currentUser, currentAssets, setCurrentAssets } from '../stores.js';
+  import { _toDollars } from '../utils.js';
   import { enhance } from '$app/forms';
 
     export let form;

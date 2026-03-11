@@ -1,7 +1,7 @@
 import { getUnreadNotifications } from './data.js';
 
-export function load() {
-	return {
-		notifications: getUnreadNotifications()
-	};
-}
+// export function load() {
+// 	return {
+// 		notifications: getUnreadNotifications()
+// 	};
+// }

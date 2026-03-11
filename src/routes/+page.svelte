@@ -9,13 +9,14 @@
 <!-- src/routes/login/+page.svelte -->
 <script>
     import { enhance } from '$app/forms';
-    import { setCurrentAssets, setCurrentUser } from './stores.js';
+    import { setCurrentAssets, setCurrentNotifications, setCurrentUser } from './stores.js';
 
     export let form;
 
     $: if (form?.success && form?.user) {
         setCurrentUser(form.user);
         setCurrentAssets(form.user.assets);
+        setCurrentNotifications(form.user.notifications);
     }
 </script>
 
