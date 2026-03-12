@@ -53,16 +53,6 @@ export async function refreshNotifications(userId) {
     }
     const notificationsData = await notificationsResponse.json();
     console.log('Notifications data retrieved:', notificationsData);
-
-    // const response = await fetch(`http://localhost:8081/v1/${userId}/notifications`, {
-    //     method: 'GET',
-    // });
-    // if (!response.ok) {
-    //     console.log('Failed to retrieve notifications:', { status: response.status });
-    //     return fail(400, { error: 'Failed to retrieve notifications.' });
-    // }
-    // const data = await response.json();
-    // console.log('Received notifications data:', data);
     
     return notificationsData.notifications;
 }

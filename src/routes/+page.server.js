@@ -1,6 +1,6 @@
 // src/routes/login/+page.server.ts
 import { fail } from '@sveltejs/kit';
-import { refreshPrices } from './utils';
+import { refreshNotifications, refreshPrices } from './utils';
 
 export const actions = {
     default: async ({ request }) => {
@@ -74,21 +74,13 @@ export const actions = {
 
             allAssets.push(...assetsData.assets);
         }
-
         const updatedAssetList = await refreshPrices(allAssets);
         console.log('All assets retrieved:', updatedAssetList);
 
         // Retrieve notifications
-        const notificationsResponse = await fetch(`http://localhost:8081/v1/${authData.name}/notifications`, {
-            method: 'GET',
-        });
-        if (!notificationsResponse.ok) {
-            console.log('Failed to retrieve notifications for:', { username, status: notificationsResponse.status });
-            return fail(400, { error: 'Failed to retrieve user notifications.' });
-        }
-        const notificationsData = await notificationsResponse.json();
-        console.log('Notifications data retrieved:', notificationsData);
+        const notificationsList = await refreshNotifications(authData.name);
+        console.log('Notifications retrieved:', notificationsList);
 
-        return { success: true, user: { ...userData.user, assets: updatedAssetList, notifications: notificationsData.notifications } };
+        return { success: true, user: { ...userData.user, assets: updatedAssetList, notifications: notificationsList } };
     }
 };
